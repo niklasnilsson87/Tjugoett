@@ -8,16 +8,15 @@ namespace nn222ia_examination_3
   {
     public List<Card> cards;
 
-    public void GenerateDeck () 
-    {
+    public void GenerateDeck () {
         cards = new List<Card>();
 
-        for (int s = 0; s < (int)Card.Suit.Count; s++)
+        foreach (var suit in (Suit[]) Enum.GetValues(typeof(Suit)))
         {
-          for (int n = 0; n < (int)Card.Name.Count; n++)
-          {
-              cards.Add(new Card((Card.Name)n, (Card.Suit)s));
-          }   
+            foreach (var rank in (Rank[]) Enum.GetValues(typeof(Rank)))
+            {
+                cards.Add(new Card(rank, suit));
+            }
         }
     }
 
@@ -36,12 +35,6 @@ namespace nn222ia_examination_3
         cards[deckCount] = cards[randomIndex];
         cards[randomIndex] = tempValue;
       }
-    }
-
-    public void NewDeck () 
-    {
-        GenerateDeck();
-        Shuffle();
     }
 
     public Card DrawCard () 

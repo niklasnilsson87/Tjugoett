@@ -2,38 +2,29 @@ using System;
 
 namespace nn222ia_examination_3
 {
+      public enum Rank 
+    {
+    Two = 2, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace, Count,
+    }
+    public enum Suit
+    {
+    Hearts = '♥', Clubs = '♠', Diamonds = '♦', Spades = '♣', Count
+    }
   class Card
   {
-    public enum Name 
-    {
-    Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Knight, Queen, King, Ace, Count,
-    }
-    public enum Suit 
-    {
-  Hearts, Clubs, Diamonds, Spades, Count
-    }
-    Name _name;
-    Suit _suit;
+    public Rank Rank {get;}
+    public Suit Suit {get;}
+    public int Value {get => (int)Rank;}
 
-    public Card (Name name, Suit suit)
+    public Card (Rank rank, Suit suit)
     {
-        _name = name;
-        _suit = suit;
+      Rank = rank;
+      Suit = suit;
     }
 
-    public Suit GetSuit ()
+    public override string ToString ()
     {
-        return _suit;
-    }
-
-    public Name GetName ()
-    {
-        return _name;
-    }
-
-    public string GetValues ()
-    {
-        return $"{_suit} {_name}";
+        return $" {Value}{(char)Suit}";
     }
   }
 }

@@ -1,39 +1,40 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace nn222ia_examination_3
 {
-    class Player
+  class Player
+  {
+    private List<Card> _hand = new List<Card>();
+    public int Sum {
+        get {
+            var sum = _hand.Sum(c => c.Value);
+            if (sum > 21) 
+            {
+                var count = _hand.Count(v => v.Rank == Rank.Ace);
+                while (sum > 21 && count-- > 0)
+                {
+                    sum-= 13;
+                }
+            }
+            return sum;
+        }
+    }
+    private int Limit { get; }
+    public string Name { get; }
+    public IEnumerable<string> ShowHand { get => _hand.Select(c => c.ToString()); }
+    public bool ShouldAcceptCard { get => Sum < Limit ? true : false; }
+
+    public Player (string name = "Player", int limit = 15)
     {
-    List<Card> hand = new List<Card>();
+        Name = name;
+        Limit = limit;
+    }
 
     public void TakeCard (Card card)
     {
-        hand.Add(card);
+        _hand.Add(card);
     }
-
-    public int SumOfHand ()
-    {
-        int sum = 0;
-        for (int i = 0; i < hand.Count; i++)
-        {
-          sum += (int)hand[i].GetName() + 2;
-          System.Console.WriteLine(hand[i].GetName());
-          System.Console.WriteLine((int)hand[i].GetName() + 2);
-        }
-        return sum;
-
-        // // int[] points;
-        // List<int> points = new List<int>();
-        // for (int i = 0; i < (int)Card.Name.Count; i++)
-        // {
-        //     // System.Console.WriteLine(i + 2);
-        //     points.Add(i + 2);
-
-        // }
-        // System.Console.WriteLine(string.Join(", ", points));
-
-    }
-
-  }
+}
 }
