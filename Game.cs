@@ -70,7 +70,7 @@ namespace nn222ia_examination_3
       for (int i = 0; i < _numberOfPlayers; i++)
       {
         string name = ($"Player #{i + 1}:");
-        Player player = new Player(name, 15);
+        Player player = new Player(name, 18);
         players.Add(player);
       }
     }
@@ -98,11 +98,11 @@ namespace nn222ia_examination_3
     /// <param name="player">Players from the List object (Players)</param>
     public void Rules(Player player)
     {
-      // Give the player a card a card if the condition is true
+      // Give the player a card if the condition is true
       while (player.ShouldAcceptCard) player.TakeCard(dealer.GiveCard());
       PrintHand(player);
 
-      if (player.Sum < 21)
+      if (player.Sum < 21 && player.ShowHand.Count() < 5)
       {
         while (dealer.ShouldAcceptCard) dealer.TakeCard(dealer.GiveCard());
         PrintHand(dealer);
@@ -124,8 +124,8 @@ namespace nn222ia_examination_3
         Print.WriteLine("Dealer wins! \n");
       }
 
-      dealer.TrashPile(player.ThrowCards());
-      dealer.TrashPile(dealer.ThrowCards());
+      dealer.DiscardPile(player.ThrowCards());
+      dealer.DiscardPile(dealer.ThrowCards());
     }
 
     /// <summary>

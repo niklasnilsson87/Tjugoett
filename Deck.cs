@@ -38,25 +38,5 @@ namespace nn222ia_examination_3
         }
       }
     }
-
-    /// <summary>
-    /// Shuffles the card list
-    /// </summary>
-    public void Shuffle()
-    {
-      Random r = new Random();
-      var deckCount = _cards.Count();
-      Card tempValue;
-      int randomIndex;
-
-      while (deckCount != 0)
-      {
-        randomIndex = r.Next(deckCount);
-        deckCount -= 1;
-        tempValue = _cards[deckCount];
-        _cards[deckCount] = _cards[randomIndex];
-        _cards[randomIndex] = tempValue;
-      }
-    }
   }
 }

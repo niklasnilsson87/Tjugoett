@@ -20,13 +20,13 @@ namespace nn222ia_examination_3
     /// </summary>
     /// <typeparam name="Card">Card</typeparam>
     /// <returns>A list object containg the cards</returns>
-    private List<Card> _trashCards = new List<Card>(51);
+    private List<Card> _discardPile = new List<Card>(51);
 
     /// <summary>
     /// Instanciates a new deck of cards
     /// </summary>
     /// <returns>A deck object</returns>
-    private Deck _deck = new Deck();
+    private static Deck _deck = new Deck();
 
     /// <summary>
     /// Constructor that sets the name and limit of the dealer
@@ -46,23 +46,23 @@ namespace nn222ia_examination_3
     public void InstansiateDeck()
     {
       _deck.GenerateDeck();
-      _deck.Shuffle();
       _cards = new List<Card>(_deck.Cards);
+      Shuffle();
     }
 
     /// <summary>
     /// Method to assign a card to the player
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Card object</returns>
     public Card GiveCard()
     {
       if (_cards.Count() <= 1)
       {
-        foreach (var card in _trashCards)
+        foreach (var card in _discardPile)
         {
           _cards.Add(card);
         }
-        _deck.Shuffle();
+        Shuffle();
       }
 
       Card c = _cards.First();
@@ -71,12 +71,32 @@ namespace nn222ia_examination_3
     }
 
     /// <summary>
-    /// Takes all cards and puts them in the trash pile List object
+    /// Takes all cards and puts them in the discard pile List object
     /// </summary>
     /// <param name="cards">Cards</param>
-    public void TrashPile(IEnumerable<Card> cards)
+    public void DiscardPile(IEnumerable<Card> cards)
     {
-      _trashCards.AddRange(cards);
+      _discardPile.AddRange(cards);
+    }
+
+    /// <summary>
+    /// Shuffles the card list
+    /// </summary>
+    public void Shuffle()
+    {
+      Random r = new Random();
+      var deckCount = _cards.Count();
+      Card tempValue;
+      int randomIndex;
+
+      while (deckCount != 0)
+      {
+        randomIndex = r.Next(deckCount);
+        deckCount -= 1;
+        tempValue = _cards[deckCount];
+        _cards[deckCount] = _cards[randomIndex];
+        _cards[randomIndex] = tempValue;
+      }
     }
   }
 }
